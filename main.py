@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Body
 from fastapi.responses import JSONResponse
 import json
 import logging
@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.INFO)
 app = FastAPI(title="Webhook Jusbrasil")
 
 @app.post("/webhook")
-async def webhook(req: Request):
+async def webhook(req: Request, data: dict = Body(...)):
     # Tenta JSON; se falhar, tenta corpo cru; se vier vazio, aceita mesmo assim
     try:
         data = await req.json()
